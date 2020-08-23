@@ -1,5 +1,8 @@
 package utils;
 
+/**
+ * POJO class to store and retrieve Weather information
+ */
 public class Weather {
 
     private String condition;
@@ -50,7 +53,7 @@ public class Weather {
 
     public void setTemperatureFromKelvinToDegree(String temperatureKelvin) {
         double temp = Double.parseDouble(temperatureKelvin) - 273.15;
-        this.temperatureDegree = temp+"";
+        this.temperatureDegree = temp + "";
     }
 
 }

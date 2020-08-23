@@ -1,49 +1,48 @@
 package com.api.test;
 
+import com.api.methods.GetWeatherDetails;
 import io.restassured.RestAssured;
-import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.testng.Assert;
 import org.testng.ITestContext;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
+import utils.LoadProperties;
 import utils.Weather;
 
-import static io.restassured.RestAssured.given;
+import java.io.IOException;
+import java.util.Properties;
 
 public class APITest {
 
-    @BeforeTest
-    public void setup() {
+    RestAssured restAssured;
+    Properties properties;
+    String city;
+    String apiKey;
 
-        RestAssured.baseURI = "http://api.openweathermap.org/data/2.5";
+    @BeforeTest
+    public void setup() throws IOException {
+
+        properties = new LoadProperties().readPropertiesFile("src//test//resources//config.properties");
+        restAssured = new RestAssured();
+        restAssured.baseURI = properties.getProperty("baseUri");
+        city = properties.getProperty("city");
+        apiKey = properties.getProperty("apiKey");
     }
 
+    /**
+     * This test method sends a get request to openweatherapi and stores weather object in ITestContext
+     *
+     * @param context ITestContext for storing weather object
+     */
     @Test(priority = 1, groups = "requiredTests")
-    public void getWeatherDetails(ITestContext context) {
+    public void getWeatherInfoAPI(ITestContext context) {
 
-        Response response = given()
-                .contentType("application/json")
-                .queryParam("q","Pune")
-                .queryParam("appid","7fe67bf08c80ded756e598d6f8fedaea")
-                .when()
-                .get("/weather")
-                .then()
-                .extract().response();
-        JsonPath jsonResponse = response.getBody().jsonPath();
-
-        Weather weather = new Weather();
-        weather.setTemperatureFromKelvinToDegree(jsonResponse.getString("main.temp"));
-        weather.setCondition(jsonResponse.getString("weather[0].description"));
-        weather.setHumidity(jsonResponse.getString("main.humidity"));
-        String tempFarhenit = ((Double.parseDouble(weather.getTemperatureDegree())*9/5)+32)+"";
-        weather.setTemperatureFahrenheit(tempFarhenit);
-        weather.setWind(jsonResponse.getString("wind.speed"));
+        GetWeatherDetails weatherDetails = new GetWeatherDetails();
+        Response response = weatherDetails.getWeatherFromCity(restAssured, city, apiKey);
+        Weather weather = weatherDetails.getWeatherObject(response);
         context.setAttribute("WeatherObjectAPI", weather);
 
-        Assert.assertEquals(jsonResponse.get("name").toString(), "Pune");
-
-
+        Assert.assertEquals(response.getBody().jsonPath().get("name").toString(), "Pune");
     }
-
 }

@@ -11,6 +11,7 @@ import org.testng.ITestContext;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 public class TestFrontEnd {
@@ -20,7 +21,7 @@ public class TestFrontEnd {
     NDTVWeatherPage weatherPage;
 
     @BeforeTest
-    public void setup() {
+    public void setup() throws IOException {
         System.setProperty("webdriver.chrome.driver", "BrowserDriver\\chromedriver.exe");
         ChromeOptions options = new ChromeOptions();
         options.addArguments("start-maximized");
@@ -31,8 +32,13 @@ public class TestFrontEnd {
         weatherPage = new NDTVWeatherPage(driver);
     }
 
+    /**
+     * This test gets Weather details from Front End and Stores them to ITestContext
+     *
+     * @param context ITestContext to set Weather Object
+     */
     @Test(priority = 1, groups = "requiredTests")
-    public void testProductAddition(ITestContext context)  {
+    public void getWeatherInfoUI(ITestContext context) throws IOException {
         homePage.navigateToWeatherPage();
         weatherPage.searchCity();
         Weather weather = weatherPage.getWeatherDetails();
@@ -40,7 +46,7 @@ public class TestFrontEnd {
     }
 
     @AfterMethod
-    public void closeBrowser(){
+    public void closeBrowser() {
         driver.quit();
     }
 

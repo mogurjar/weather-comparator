@@ -5,7 +5,7 @@
         <classes>
             <class name="com.frontend.test.TestFrontEnd"/>
             <class name="com.api.test.APITest"/>
-            <class name="com.comparator.WeatherComparisonTest"/>
+            <class name="com.comparator.test.WeatherComparisonTest"/>
         </classes>
     </test>
 </suite>

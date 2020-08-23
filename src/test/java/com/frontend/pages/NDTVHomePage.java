@@ -7,6 +7,9 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+/**
+ * Home Page of NDTV website with required Locators
+ */
 public class NDTVHomePage {
 
     WebDriver driver;
@@ -27,13 +30,15 @@ public class NDTVHomePage {
         PageFactory.initElements(driver, this);
     }
 
-    public void navigateToWeatherPage(){
+    /**
+     * Waits for Notification popup, closes ita and lciks on weather tab to navigate to Weather Page
+     */
+    public void navigateToWeatherPage() {
 
         wait.until(ExpectedConditions.visibilityOf(closeNotificationAlert));
         closeNotificationAlert.click();
         moreNavigationOption.click();
         weatherLink.click();
     }
-
 
 }
