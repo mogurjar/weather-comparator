@@ -5,6 +5,7 @@ import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import org.testng.Assert;
 import org.testng.ITestContext;
+import org.testng.Reporter;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import utils.LoadProperties;
@@ -38,11 +39,12 @@ public class APITest {
     @Test(priority = 1, groups = "requiredTests")
     public void getWeatherInfoAPI(ITestContext context) {
 
+        Reporter.log("Getting Weather Information from OpenMapAPI for "+city);
         GetWeatherDetails weatherDetails = new GetWeatherDetails();
         Response response = weatherDetails.getWeatherFromCity(restAssured, city, apiKey);
         Weather weather = weatherDetails.getWeatherObject(response);
         context.setAttribute("WeatherObjectAPI", weather);
 
-        Assert.assertEquals(response.getBody().jsonPath().get("name").toString(), "Pune");
+        Assert.assertEquals(response.getBody().jsonPath().get("name").toString(), city);
     }
 }

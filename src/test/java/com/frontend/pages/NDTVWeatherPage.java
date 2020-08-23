@@ -23,6 +23,10 @@ public class NDTVWeatherPage {
     Properties properties;
     String city;
 
+    public String getCity() {
+        return city;
+    }
+
     @FindBy(id = "searchBox")
     WebElement searchInputBox;
 

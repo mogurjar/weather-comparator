@@ -25,7 +25,6 @@ public class Comparator {
         LoadProperties loadProperties = new LoadProperties();
         Properties properties = loadProperties.readPropertiesFile("src//test//resources//config.properties");
         double temperatureVariance = Double.parseDouble(properties.getProperty("temperatureVariance"));
-        System.out.println(tempDiff);
         if (Math.abs(tempDiff) >= 0 && Math.abs(tempDiff) <= temperatureVariance) {
             tempMatches = true;
         } else {

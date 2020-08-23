@@ -2,14 +2,15 @@ package com.frontend.test;
 
 import com.frontend.pages.NDTVHomePage;
 import com.frontend.pages.NDTVWeatherPage;
-import org.testng.annotations.AfterMethod;
-import utils.Weather;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.ITestContext;
+import org.testng.Reporter;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
+import utils.Weather;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -39,6 +40,7 @@ public class TestFrontEnd {
      */
     @Test(priority = 1, groups = "requiredTests")
     public void getWeatherInfoUI(ITestContext context) throws IOException {
+        Reporter.log("Getting Weather Information from NDTV website for "+weatherPage.getCity());
         homePage.navigateToWeatherPage();
         weatherPage.searchCity();
         Weather weather = weatherPage.getWeatherDetails();
