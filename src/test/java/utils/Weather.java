@@ -1,11 +1,11 @@
-package com.test.model;
+package utils;
 
 public class Weather {
 
     private String condition;
     private String wind;
     private String humidity;
-    private String tempratureDegree;
+    private String temperatureDegree;
     private String temperatureFahrenheit;
 
     public String getCondition() {
@@ -32,12 +32,12 @@ public class Weather {
         this.humidity = humidity;
     }
 
-    public String getTempratureDegree() {
-        return tempratureDegree;
+    public String getTemperatureDegree() {
+        return temperatureDegree;
     }
 
-    public void setTempratureDegree(String tempratureDegree) {
-        this.tempratureDegree = tempratureDegree;
+    public void setTemperatureDegree(String temperatureDegree) {
+        this.temperatureDegree = temperatureDegree;
     }
 
     public String getTemperatureFahrenheit() {
@@ -47,4 +47,10 @@ public class Weather {
     public void setTemperatureFahrenheit(String temperatureFahrenheit) {
         this.temperatureFahrenheit = temperatureFahrenheit;
     }
+
+    public void setTemperatureFromKelvinToDegree(String temperatureKelvin) {
+        double temp = Double.parseDouble(temperatureKelvin) - 273.15;
+        this.temperatureDegree = temp+"";
+    }
+
 }

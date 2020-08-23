@@ -1,10 +1,12 @@
 package com.frontend.pages;
 
-import com.test.model.Weather;
+import utils.Weather;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class NDTVWeatherPage {
@@ -42,11 +44,11 @@ public class NDTVWeatherPage {
         PageFactory.initElements(driver, this);
     }
 
-    public void searchCity(){
+    public void searchCity() {
 
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("loading")));
         searchInputBox.sendKeys("Pune");
-        searchInputBox.click();
-//        wait.until(ExpectedConditions.visibilityOf(puneCheckLabel));
+        wait.until(ExpectedConditions.visibilityOf(puneCheckLabel));
         puneCheckLabel.click();
 
     }
@@ -58,7 +60,7 @@ public class NDTVWeatherPage {
         weather.setCondition(weatherCondition.getText().split(": ")[1]);
         weather.setHumidity(weatherHumidity.getText().split(": ")[1].replace("%",""));
         weather.setWind(weatherWind.getText().split(": ")[1]);
-        weather.setTempratureDegree(tempDegrees.getText().split(": ")[1]);
+        weather.setTemperatureDegree(tempDegrees.getText().split(": ")[1]);
         weather.setTemperatureFahrenheit(tempFahrenheit.getText().split(": ")[1]);
 
         return weather;

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Weather Comparision">
+    <test name="test">
+        <classes>
+            <class name="com.frontend.test.TestFrontEnd"/>
+            <class name="com.api.test.APITest"/>
+            <class name="com.comparator.WeatherComparisonTest"/>
+        </classes>
+    </test>
+</suite>

@@ -2,9 +2,12 @@ package com.frontend.test;
 
 import com.frontend.pages.NDTVHomePage;
 import com.frontend.pages.NDTVWeatherPage;
+import org.testng.annotations.AfterMethod;
+import utils.Weather;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.testng.ITestContext;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
@@ -26,16 +29,19 @@ public class TestFrontEnd {
         driver.get("https://www.ndtv.com/");
         homePage = new NDTVHomePage(driver);
         weatherPage = new NDTVWeatherPage(driver);
-
-
-
     }
-    @Test(priority = 1)
-    public void testProductAddition() {
+
+    @Test(priority = 1, groups = "requiredTests")
+    public void testProductAddition(ITestContext context)  {
         homePage.navigateToWeatherPage();
         weatherPage.searchCity();
-        weatherPage.getWeatherDetails();
+        Weather weather = weatherPage.getWeatherDetails();
+        context.setAttribute("WeatherObjectFrontEnd", weather);
+    }
 
+    @AfterMethod
+    public void closeBrowser(){
+        driver.quit();
     }
 
 }
